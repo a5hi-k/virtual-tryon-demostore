@@ -34,7 +34,7 @@ const CostumeGallery = ({ onApiResponse }) => {
         <TryOnModal
           costume={selectedCostume}
           onClose={() => setShowModal(false)}
-          onApiResponse={onApiResponse} // Pass onApiResponse prop to TryOnModal
+          onApiResponse={onApiResponse} 
         />
       )}
     </div>

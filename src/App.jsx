@@ -7,7 +7,6 @@ const App = () => {
   const [processedImage, setProcessedImage] = useState(null);
 
   const handleApiResponse = (response) => {
-    // Assuming the response is an array and you want to display the first processed image
     const imageUrl = response[0]?.url || null;
     setProcessedImage(imageUrl);
   };
@@ -15,8 +14,9 @@ const App = () => {
   return (
     <div className="App">
       <h1>Zaima</h1>
-      <CostumeGallery onApiResponse={handleApiResponse} />
       {processedImage && <ProcessedImage imageUrl={processedImage} />}
+      <CostumeGallery onApiResponse={handleApiResponse} />
+      
     </div>
   );
 };

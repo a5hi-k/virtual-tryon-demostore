@@ -53,6 +53,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: auto;
+  padding: 20px; 
 }
 
 .modal-content {
@@ -62,6 +64,8 @@
   text-align: left;
   max-width: 600px;
   width: 100%;
+  max-height: 90vh;
+  overflow-y: auto; 
   color: black;
 }
 
@@ -71,6 +75,14 @@
   justify-content: space-around;
 }
 
+upload-section {
+  max-height: 200px; 
+  overflow-y: auto; 
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
 .model-card {
   margin: 10px;
   display: inline-block;
@@ -78,12 +90,11 @@
 }
 
 .model-card img {
-  width: 100px; 
-  height: 100px; 
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   cursor: pointer;
 }
-
 .model-card p {
   margin-top: 5px;
   font-size: 14px;
@@ -99,7 +110,6 @@
   margin-top: 10px;
 }
 
-
 button:disabled {
   cursor: not-allowed;
   opacity: 0.5; 
@@ -113,6 +123,19 @@ button:disabled {
   pointer-events: auto; 
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.modal {
+  pointer-events: none;
+}
+
+.modal-content {
+  pointer-events: auto;
+}
+
 .processed-image {
   text-align: center;
   margin-top: 20px;
@@ -120,12 +143,24 @@ button:disabled {
 
 .processed-image img {
   max-width: 100%;
-  height: auto; 
-  border: 1px solid #ddd; 
-  border-radius: 8px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .processed-image p {
-  color: #666; 
+  color: #666;
+}
+
+/* Additional styling for mobile devices */
+@media (max-width: 600px) {
+  .modal-content {
+    max-height: 80vh; /* Slightly reduce height on mobile */
+    padding: 15px; /* Adjust padding for small screens */
+  }
+
+  .upload-section {
+    max-height: 150px; /* Further reduce height for mobile */
+  }
 }

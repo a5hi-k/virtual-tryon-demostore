@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { client } from "@gradio/client";
+import ErrorPopup from './ErrorPopup';
 
 const modelImages = [
   { id: 1, name: 'menmodel1', imageUrl: '/images/menmodel1.jpg' },
@@ -14,6 +15,7 @@ const TryOnModal = ({ costume, onClose, onApiResponse }) => {
   const [selectedModel, setSelectedModel] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleImageUpload = (event) => {
     setUploadedImage(URL.createObjectURL(event.target.files[0]));
@@ -51,6 +53,7 @@ const TryOnModal = ({ costume, onClose, onApiResponse }) => {
         console.log(result.data);
       } catch (error) {
         console.error('Error during API call:', error);
+        setErrorMessage('Failed to generate the try-on image. Please try again.');
       } finally {
         setLoading(false);
         onClose();
@@ -84,7 +87,7 @@ const TryOnModal = ({ costume, onClose, onApiResponse }) => {
           {loading ? "Loading... Don't click! " : "Try On"}
         </button>
         <button onClick={onClose} disabled={loading}>Close</button>
-      </div>
+        {errorMessage && <ErrorPopup message={errorMessage} onClose={handleCloseError} />}      </div>
     </div>
   );
 };
