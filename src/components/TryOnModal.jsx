@@ -85,6 +85,7 @@ const TryOnModal = ({ costume, onClose, onApiResponse, onError }) => {
         </div>
         <div className="upload-section">
           <h3>Or Upload Your Own Image</h3>
+          <p>For better results, upload a proper image as of reference models</p>
           <input type="file" accept="image/*" onChange={handleImageUpload} />
           {uploadedImage && <img src={uploadedImage} alt="Uploaded" className="uploaded-image" />}
         </div>
