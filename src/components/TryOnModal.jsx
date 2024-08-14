@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { client } from "@gradio/client";
 import ErrorPopup from './ErrorPopup';
@@ -11,7 +12,7 @@ const modelImages = [
   { id: 6, name: 'womenmodel3', imageUrl: '/images/womenmodel3.jpeg' },
 ];
 
-const TryOnModal = ({ costume, onClose, onApiResponse }) => {
+const TryOnModal = ({ costume, onClose, onApiResponse, onError }) => {
   const [selectedModel, setSelectedModel] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,18 +26,21 @@ const TryOnModal = ({ costume, onClose, onApiResponse }) => {
     if ((selectedModel || uploadedImage) && !loading) {
       setLoading(true);
       try {
-        const app = await client("zen-vton/demo_space1");
+        const app = await client("kadirnar/IDM-VTON");
         
         const costumeResponse = await fetch(costume.imageUrl);
         const costumeImageBlob = await costumeResponse.blob();
 
         let modelImageBlob;
+        let modelImageUrl;
         if (selectedModel) {
           const modelResponse = await fetch(selectedModel.imageUrl);
           modelImageBlob = await modelResponse.blob();
+          modelImageUrl = selectedModel.imageUrl;
         } else {
           const uploadedResponse = await fetch(uploadedImage);
           modelImageBlob = await uploadedResponse.blob();
+          modelImageUrl = uploadedImage;
         }
 
         const result = await app.predict("/tryon", [
@@ -49,11 +53,12 @@ const TryOnModal = ({ costume, onClose, onApiResponse }) => {
           42,
         ]);
 
-        onApiResponse(result.data);
+        onApiResponse(result.data, modelImageUrl);
         console.log(result.data);
       } catch (error) {
         console.error('Error during API call:', error);
         setErrorMessage('Failed to generate the try-on image. Please try again.');
+        onError('Failed to generate the try-on image. Please try again.');
       } finally {
         setLoading(false);
         onClose();
@@ -87,9 +92,11 @@ const TryOnModal = ({ costume, onClose, onApiResponse }) => {
           {loading ? "Loading... Don't click! " : "Try On"}
         </button>
         <button onClick={onClose} disabled={loading}>Close</button>
-        {errorMessage && <ErrorPopup message={errorMessage} onClose={handleCloseError} />}      </div>
+        {errorMessage && <ErrorPopup message={errorMessage} onClose={() => setErrorMessage(null)} />}
+      </div>
     </div>
   );
 };
 
 export default TryOnModal;
+

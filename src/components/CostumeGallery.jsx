@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import TryOnModal from './TryOnModal';
 
@@ -13,7 +14,7 @@ const costumes = [
   { id: 9, name: 'womentop4', imageUrl: '/images/womentop4.jpeg' },
 ];
 
-const CostumeGallery = ({ onApiResponse }) => {
+const CostumeGallery = ({ onApiResponse, onError }) => {
   const [selectedCostume, setSelectedCostume] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -34,7 +35,8 @@ const CostumeGallery = ({ onApiResponse }) => {
         <TryOnModal
           costume={selectedCostume}
           onClose={() => setShowModal(false)}
-          onApiResponse={onApiResponse} 
+          onApiResponse={onApiResponse}
+          onError={onError}
         />
       )}
     </div>
@@ -42,3 +44,4 @@ const CostumeGallery = ({ onApiResponse }) => {
 };
 
 export default CostumeGallery;
+
